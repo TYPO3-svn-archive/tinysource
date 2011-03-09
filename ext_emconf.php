@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "tinysource".
 #
-# Auto generated 09-03-2011 20:53
+# Auto generated 09-03-2011 23:56
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'The tinysource extension is a small extension which compress the output source code of every page. Basicly it removes linebreaks, tabs, comments and double spaces. The setup of tinysource allows to configure which of these strip-methods shoould be used, separately for <head> and <body>.',
 	'category' => 'fe',
 	'shy' => 0,
-	'version' => '0.0.1',
+	'version' => '1.0.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -38,7 +38,9 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:13:{s:9:"ChangeLog";s:4:"3882";s:10:"README.txt";s:4:"c148";s:19:"class.tx_minify.php";s:4:"419c";s:12:"ext_icon.gif";s:4:"5f5a";s:17:"ext_localconf.php";s:4:"00f8";s:14:"ext_tables.php";s:4:"2a37";s:13:"lib/JSMin.php";s:4:"e9fe";s:18:"lib/Minify/CSS.php";s:4:"a25d";s:31:"lib/Minify/CommentPreserver.php";s:4:"86ba";s:25:"lib/Minify/Javascript.php";s:4:"b751";s:29:"lib/Minify/CSS/Compressor.php";s:4:"d691";s:30:"lib/Minify/CSS/UriRewriter.php";s:4:"0920";s:16:"static/setup.txt";s:4:"35b0";}',
+	'_md5_values_when_last_written' => 'a:6:{s:23:"class.tx_tinysource.php";s:4:"d3fb";s:12:"ext_icon.gif";s:4:"43ce";s:17:"ext_localconf.php";s:4:"ef05";s:14:"ext_tables.php";s:4:"3884";s:14:"doc/manual.sxw";s:4:"5f69";s:16:"static/setup.txt";s:4:"f34e";}',
+	'suggests' => array(
+	),
 );
 
 ?>
