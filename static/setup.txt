@@ -1,0 +1,5 @@
+plugin.tx_tinysource {
+	enable = 1
+	stripComments = 1
+	makeEverythingTiny = 0
+}
