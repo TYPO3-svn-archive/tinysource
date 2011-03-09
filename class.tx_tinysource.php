@@ -92,7 +92,6 @@ class tx_tinysource {
 		// Do replacements
 		$source = str_replace($replacements, '', $source);
 
-
 		// Strip comments (only for <body>)
 		if ($this->conf[$type]['stripComments'] && $type == self::TINYSOURCE_BODY) {
 			$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
@@ -108,5 +107,4 @@ class tx_tinysource {
 		return $source;
 	}
 }
-
 ?>
