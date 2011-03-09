@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "tinysource".
 #
-# Auto generated 11-02-2011 22:04
+# Auto generated 09-03-2011 20:53
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Removes whitespaces in frontend output',
 	'category' => 'fe',
 	'shy' => 0,
-	'version' => '1.0.0',
+	'version' => '0.0.1',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -25,13 +25,11 @@ $EM_CONF[$_EXTKEY] = array(
 	'uploadfolder' => 0,
 	'createDirs' => '',
 	'modify_tables' => '',
-	'clearcacheonload' => 0,
+	'clearcacheonload' => 1,
 	'lockType' => '',
-	'author' => 'Armin Rüdiger Vieweg',
+	'author' => 'Armin RÃ¼diger Vieweg',
 	'author_email' => 'info@professorweb.de',
-	'author_company' => '',
-	'CGLcompliance' => '',
-	'CGLcompliance_note' => '',
+	'author_company' => 'Professor Web - Webdesign Blog',
 	'constraints' => array(
 		'depends' => array(
 		),
