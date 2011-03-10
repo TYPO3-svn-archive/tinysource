@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Tiny Source',
-	'description' => 'The tinysource extension is a small extension which compress the output source code of every page. Basicly it removes linebreaks, tabs, comments and double spaces. The setup of tinysource allows to configure which of these strip-methods shoould be used, separately for <head> and <body>.',
+	'description' => 'The tinysource extension is a small extension which compress the output source code of every page. Basicly it removes linebreaks, tabs, comments and double spaces. The setup of tinysource allows to configure which of these strip-methods should be used, separately for <head> and <body>.',
 	'category' => 'fe',
 	'shy' => 0,
 	'version' => '1.0.0',
