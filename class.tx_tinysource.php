@@ -50,7 +50,7 @@ class tx_tinysource {
 	public function tinysource(&$params, &$obj) {
 		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_tinysource.'];
 
-		if ($this->conf['enable']) {
+		if ($this->conf['enable'] && !$GLOBALS['TSFE']->config['config']['disableAllHeaderCode']) {
 			$source = $GLOBALS['TSFE']->content;
 			preg_match_all('/(.*?<head.*?>)(.*)(<\/head>.*?<body.*?>)(.*)(<\/body>.*)/is', $source, $parts);
 
@@ -72,7 +72,7 @@ class tx_tinysource {
 	 * Gets the configuration and makes the source tiny, <head> and <body>
 	 * separated
 	 *
-	 * @param <type> $source
+	 * @param string $source
 	 * @param string $type BODY or HEAD
 	 *
 	 * @return string the tiny source code
