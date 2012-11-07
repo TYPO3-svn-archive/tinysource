@@ -101,8 +101,8 @@ class tx_tinysource {
 			if ($this->conf[$type]['preventStripOfSearchComment']) {
 				$source = $this->keepTypo3SearchTag($source);
 			} else {
-                $source = $this->stripHtmlComments($source);
-            }
+				$source = $this->stripHtmlComments($source);
+			}
 
 		}
 
