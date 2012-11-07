@@ -3,6 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2011 Armin Ruediger Vieweg <info@professorweb.de>
+ * (c) 2012 Dennis Römmich <dennis@roemmich.eu>
 *
 *  All rights reserved
 *
@@ -27,6 +28,7 @@
  * Main tinysource class
  *
  * @author	Armin Ruediger Vieweg <info@professorweb.de>
+ * @author Dennis Römmich <dennis@roemmich.eu>
  * @package	TYPO3
  * @subpackage	tx_tinysource
  */
@@ -94,7 +96,14 @@ class tx_tinysource {
 
 		// Strip comments (only for <body>)
 		if ($this->conf[$type]['stripComments'] && $type == self::TINYSOURCE_BODY) {
-			$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
+
+			//Prevent Strip of Search Comment if preventStripOfSearchComment is true
+			if ($this->conf[$type]['preventStripOfSearchComment']) {
+				$source = $this->keepTypo3SearchTag($source);
+			} else {
+                $source = $this->stripHtmlComments($source);
+            }
+
 		}
 
 		// Strip double spaces
@@ -106,5 +115,36 @@ class tx_tinysource {
 		}
 		return $source;
 	}
+
+	/**
+	 * Make tinysource able to prevent strip of TYPO3 search comments
+	 *
+	 * @param string $source
+	 *
+	 * @return string the tiny source code without replacing the Typo3 Search Tag
+	 */
+	protected function keepTypo3SearchTag($source) {
+		$originalSearchTagBegin = '<!--TYPO3SEARCH_begin-->';
+        $originalSearchTagEnd = '<!--TYPO3SEARCH_end-->';
+        $hash = uniqid('t3search_replacement_');
+		$hashedSearchTagBegin = '$$$' . $hash . '_start$$$';
+        $hashedSearchTagEnd = '$$$' . $hash . '_end$$$';
+
+        $source = str_replace(array($originalSearchTagBegin, $originalSearchTagEnd), array($hashedSearchTagBegin, $hashedSearchTagEnd), $source);
+        $source = $this->stripHtmlComments($source);
+        $source = str_replace(array($hashedSearchTagBegin, $hashedSearchTagEnd), array($originalSearchTagBegin, $originalSearchTagEnd), $source);
+        return $source;
+	}
+
+	/**
+	 * @param string $source
+	 *
+	 * @return string the tiny source without html comments
+	 */
+	protected function stripHtmlComments($source) {
+		$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
+		return $source;
+	}
+
 }
 ?>
