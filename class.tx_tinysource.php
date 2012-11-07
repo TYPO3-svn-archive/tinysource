@@ -65,7 +65,7 @@ class tx_tinysource {
 			$head = $this->makeTiny($head, self::TINYSOURCE_HEAD);
 			$body = $this->makeTiny($body, self::TINYSOURCE_BODY);
 
-			$GLOBALS['TSFE']->content = $beforeHead. $head . $afterHead . $body . $afterBody;
+			$GLOBALS['TSFE']->content = $this->customReplacements($beforeHead. $head . $afterHead . $body . $afterBody);
 
 		}
 	}
@@ -96,14 +96,7 @@ class tx_tinysource {
 
 		// Strip comments (only for <body>)
 		if ($this->conf[$type]['stripComments'] && $type == self::TINYSOURCE_BODY) {
-
-			//Prevent Strip of Search Comment if preventStripOfSearchComment is true
-			if ($this->conf[$type]['preventStripOfSearchComment']) {
-				$source = $this->keepTypo3SearchTag($source);
-			} else {
-                $source = $this->stripHtmlComments($source);
-            }
-
+			$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
 		}
 
 		// Strip double spaces
@@ -117,32 +110,23 @@ class tx_tinysource {
 	}
 
 	/**
-	 * Make tinysource able to prevent strip of TYPO3 search comments
-	 *
 	 * @param string $source
 	 *
-	 * @return string the tiny source code without replacing the Typo3 Search Tag
+	 * @return string the tiny source code with custom replacements
 	 */
-	protected function keepTypo3SearchTag($source) {
-		$originalSearchTagBegin = '<!--TYPO3SEARCH_begin-->';
-        $originalSearchTagEnd = '<!--TYPO3SEARCH_end-->';
-        $hash = uniqid('t3search_replacement_');
-		$hashedSearchTagBegin = '$$$' . $hash . '_start$$$';
-        $hashedSearchTagEnd = '$$$' . $hash . '_end$$$';
-
-        $source = str_replace(array($originalSearchTagBegin, $originalSearchTagEnd), array($hashedSearchTagBegin, $hashedSearchTagEnd), $source);
-        $source = $this->stripHtmlComments($source);
-        $source = str_replace(array($hashedSearchTagBegin, $hashedSearchTagEnd), array($originalSearchTagBegin, $originalSearchTagEnd), $source);
-        return $source;
-	}
-
-	/**
-	 * @param string $source
-	 *
-	 * @return string the tiny source without html comments
-	 */
-	protected function stripHtmlComments($source) {
-		$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
+	private function customReplacements($source) {
+		$customReplacements = $this->conf['customReplacements.'];
+		ksort($customReplacements);
+		foreach($customReplacements as $parameters) {
+			switch($parameters['type']) {
+				case 'str_replace':
+					$source = str_replace($parameters['search'], $parameters['replace'], $source);
+					break;
+				case 'preg_replace';
+					$source = preg_replace($parameters['pattern'], $parameters['replace'], $source);
+					break;
+			}
+		}
 		return $source;
 	}
 
