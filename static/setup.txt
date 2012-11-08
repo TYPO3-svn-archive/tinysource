@@ -12,5 +12,6 @@ plugin.tx_tinysource {
 		stripNewLines = 1
 		stripDoubleSpaces = 1
 		stripTwoLinesToOne = 0
+		preventStripOfSearchComment = 1
 	}
 }
