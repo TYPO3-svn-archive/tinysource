@@ -1,36 +1,36 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2011 Armin Ruediger Vieweg <info@professorweb.de>
+ *  Copyright notice
+ *
+ *  (c) 2011-2012 Armin Ruediger Vieweg <armin@v.ieweg.de>
  * (c) 2012 Dennis Römmich <dennis@roemmich.eu>
-*
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * Main tinysource class
  *
- * @author	Armin Ruediger Vieweg <info@professorweb.de>
+ * @author Armin Ruediger Vieweg <armin@v.ieweg.de>
  * @author Dennis Römmich <dennis@roemmich.eu>
- * @package	TYPO3
- * @subpackage	tx_tinysource
+ * @package TYPO3
+ * @subpackage tx_tinysource
  */
 class tx_tinysource {
 
@@ -73,7 +73,7 @@ class tx_tinysource {
 			$head = $this->makeTiny($head, self::TINYSOURCE_HEAD);
 			$body = $this->makeTiny($body, self::TINYSOURCE_BODY);
 
-			$GLOBALS['TSFE']->content = $this->customReplacements($beforeHead. $head . $afterHead . $body . $afterBody);
+			$GLOBALS['TSFE']->content = $this->customReplacements($beforeHead . $head . $afterHead . $body . $afterBody);
 		}
 	}
 
@@ -102,14 +102,12 @@ class tx_tinysource {
 
 		// Strip comments (only for <body>)
 		if ($this->conf[$type]['stripComments'] && $type == self::TINYSOURCE_BODY) {
-
 			//Prevent Strip of Search Comment if preventStripOfSearchComment is true
 			if ($this->conf[$type]['preventStripOfSearchComment']) {
 				$source = $this->keepTypo3SearchTag($source);
 			} else {
 				$source = $this->stripHtmlComments($source);
 			}
-
 		}
 
 		// Strip double spaces
@@ -123,10 +121,10 @@ class tx_tinysource {
 	}
 
 	/**
-	 * Make tinysource able to prevent strip of TYPO3 search comments
+	 * Strips html comments from given string, but keep TYPO3SEARCH strings
 	 *
 	 * @param string $source
-	 * @return string the tiny source code without replacing the Typo3 Search Tag
+	 * @return string source without html comments, except TYPO3SEARCH comments
 	 */
 	protected function keepTypo3SearchTag($source) {
 		$originalSearchTagBegin = '<!--TYPO3SEARCH_begin-->';
@@ -142,8 +140,10 @@ class tx_tinysource {
 	}
 
 	/**
+	 * Strips html comments from given string
+	 *
 	 * @param string $source
-	 * @return string the tiny source without html comments
+	 * @return string source without html comments
 	 */
 	protected function stripHtmlComments($source) {
 		$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
@@ -151,14 +151,16 @@ class tx_tinysource {
 	}
 
 	/**
+	 * Performs customReplacements on given source
+	 *
 	 * @param string $source
-	 * @return string the tiny source code with custom replacements
+	 * @return string source code with performed customReplacements
 	 */
 	private function customReplacements($source) {
 		$customReplacements = $this->conf['customReplacements.'];
 		ksort($customReplacements);
-		foreach($customReplacements as $parameters) {
-			switch($parameters['type']) {
+		foreach ($customReplacements as $parameters) {
+			switch ($parameters['type']) {
 				case 'str_replace':
 					$source = str_replace($parameters['search'], $parameters['replace'], $source);
 					break;
@@ -171,4 +173,5 @@ class tx_tinysource {
 	}
 
 }
+
 ?>
