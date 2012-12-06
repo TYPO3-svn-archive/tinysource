@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Tiny Source',
-	'description' => 'The tinysource extension is a small extension which compresses the output source code of every page. Basically it removes line breaks, tabs, comments and double spaces. The setup of tinysource allows to configure which of these strip-methods should be used.',
+	'description' => 'Compresses the output source code of every page by removing line breaks, tabs, comments and double spaces. Highly configurable. Works with static file cache extensions.',
 	'category' => 'fe',
 	'shy' => 0,
 	'version' => '1.0.2',
@@ -28,8 +28,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearcacheonload' => 1,
 	'lockType' => '',
 	'author' => 'Armin Ruediger Vieweg',
-	'author_email' => 'info@professorweb.de',
-	'author_company' => 'Professor Web - Webdesign Blog',
+	'author_email' => 'armin@v.ieweg.de',
+	'author_company' => '',
 	'constraints' => array(
 		'depends' => array(
 		),

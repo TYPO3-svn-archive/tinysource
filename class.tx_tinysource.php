@@ -49,6 +49,14 @@ class tx_tinysource {
 	 */
 	const TINYSOURCE_BODY = 'body.';
 
+	/**
+	 * Method called by "contentPostProc-all" TYPO3 core hook.
+	 * It checks the typoscript configuration and do the minify of source code.
+	 *
+	 * @param mixed $params
+	 * @param mixed $obj
+	 * @return void
+	 */
 	public function tinysource(&$params, &$obj) {
 		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_tinysource.'];
 
@@ -65,8 +73,7 @@ class tx_tinysource {
 			$head = $this->makeTiny($head, self::TINYSOURCE_HEAD);
 			$body = $this->makeTiny($body, self::TINYSOURCE_BODY);
 
-			$GLOBALS['TSFE']->content = $beforeHead. $head . $afterHead . $body . $afterBody;
-
+			$GLOBALS['TSFE']->content = $this->customReplacements($beforeHead. $head . $afterHead . $body . $afterBody);
 		}
 	}
 
@@ -76,7 +83,6 @@ class tx_tinysource {
 	 *
 	 * @param string $source
 	 * @param string $type BODY or HEAD
-	 *
 	 * @return string the tiny source code
 	 */
 	private function makeTiny($source, $type) {
@@ -120,7 +126,6 @@ class tx_tinysource {
 	 * Make tinysource able to prevent strip of TYPO3 search comments
 	 *
 	 * @param string $source
-	 *
 	 * @return string the tiny source code without replacing the Typo3 Search Tag
 	 */
 	protected function keepTypo3SearchTag($source) {
@@ -138,11 +143,30 @@ class tx_tinysource {
 
 	/**
 	 * @param string $source
-	 *
 	 * @return string the tiny source without html comments
 	 */
 	protected function stripHtmlComments($source) {
 		$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
+		return $source;
+	}
+
+	/**
+	 * @param string $source
+	 * @return string the tiny source code with custom replacements
+	 */
+	private function customReplacements($source) {
+		$customReplacements = $this->conf['customReplacements.'];
+		ksort($customReplacements);
+		foreach($customReplacements as $parameters) {
+			switch($parameters['type']) {
+				case 'str_replace':
+					$source = str_replace($parameters['search'], $parameters['replace'], $source);
+					break;
+				case 'preg_replace';
+					$source = preg_replace($parameters['pattern'], $parameters['replace'], $source);
+					break;
+			}
+		}
 		return $source;
 	}
 
