@@ -146,7 +146,7 @@ class tx_tinysource {
 	 * @return string source without html comments
 	 */
 	protected function stripHtmlComments($source) {
-		$source = preg_replace('/<\!\-\-.*?\-\->/is', '', $source);
+		$source = preg_replace('/<\!\-\-(?!INT_SCRIPT\.)(?!HD_)(?!TDS_)(?!FD_).*?\-\->/s', '', $source);
 		return $source;
 	}
 
@@ -156,7 +156,7 @@ class tx_tinysource {
 	 * @param string $source
 	 * @return string source code with performed customReplacements
 	 */
-	private function customReplacements($source) {
+	protected function customReplacements($source) {
 		$customReplacements = $this->conf['customReplacements.'];
 		ksort($customReplacements);
 		foreach ($customReplacements as $parameters) {
@@ -171,7 +171,5 @@ class tx_tinysource {
 		}
 		return $source;
 	}
-
 }
-
 ?>
