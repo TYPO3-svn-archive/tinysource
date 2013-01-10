@@ -158,15 +158,17 @@ class tx_tinysource {
 	 */
 	protected function customReplacements($source) {
 		$customReplacements = $this->conf['customReplacements.'];
-		ksort($customReplacements);
-		foreach ($customReplacements as $parameters) {
-			switch ($parameters['type']) {
-				case 'str_replace':
-					$source = str_replace($parameters['search'], $parameters['replace'], $source);
-					break;
-				case 'preg_replace';
-					$source = preg_replace($parameters['pattern'], $parameters['replace'], $source);
-					break;
+		if (is_array($customReplacements)) {
+			ksort($customReplacements);
+			foreach ($customReplacements as $parameters) {
+				switch ($parameters['type']) {
+					case 'str_replace':
+						$source = str_replace($parameters['search'], $parameters['replace'], $source);
+						break;
+					case 'preg_replace';
+						$source = preg_replace($parameters['pattern'], $parameters['replace'], $source);
+						break;
+				}
 			}
 		}
 		return $source;
