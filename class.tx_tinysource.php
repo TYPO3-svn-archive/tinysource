@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2012 Armin Ruediger Vieweg <armin@v.ieweg.de>
+ *  (c) 2011-2013 Armin Ruediger Vieweg <armin@v.ieweg.de>
  *  (c) 2012 Dennis Römmich <dennis@roemmich.eu>
  *
  *  All rights reserved
