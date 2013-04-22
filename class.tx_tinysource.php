@@ -62,18 +62,28 @@ class tx_tinysource {
 
 		if ($this->conf['enable'] && !$GLOBALS['TSFE']->config['config']['disableAllHeaderCode']) {
 			$source = $GLOBALS['TSFE']->content;
-			preg_match_all('/(.*?<head.*?>)(.*)(<\/head>.*?<body.*?>)(.*)(<\/body>.*)/is', $source, $parts);
 
-			$beforeHead = $parts[1][0];
-			$head = $parts[2][0];
-			$afterHead = $parts[3][0];
-			$body = $parts[4][0];
-			$afterBody = $parts[5][0];
+			$headOffset = strpos($source, '<head');
+			$headEndOffset = strpos($source, '>', $headOffset);
+			$closingHeadOffset = strpos($source, '</head>');
+			$bodyOffset = strpos($source, '<body');
+			$bodyEndOffset = strpos($source, '>', $bodyOffset);
+			$closingBodyOffset = strpos($source, '</body>');
 
-			$head = $this->makeTiny($head, self::TINYSOURCE_HEAD);
-			$body = $this->makeTiny($body, self::TINYSOURCE_BODY);
+			if ($headOffset !== FALSE && $headEndOffset !== FALSE && $closingHeadOffset !== FALSE ||
+				$bodyOffset !== FALSE && $bodyEndOffset !== FALSE && $closingBodyOffset !== FALSE) {
 
-			$GLOBALS['TSFE']->content = $this->customReplacements($beforeHead . $head . $afterHead . $body . $afterBody);
+				$beforeHead = substr($source, 0, $headEndOffset + 1);
+				$head = substr($source, $headEndOffset + 1, $closingHeadOffset - $headEndOffset - 1);
+				$afterHead = substr($source, $closingHeadOffset, $bodyEndOffset - $closingHeadOffset + 1);
+				$body = substr($source, $bodyEndOffset + 1, $closingBodyOffset - $bodyEndOffset - 1);
+				$afterBody = substr($source, $closingBodyOffset);
+
+				$head = $this->makeTiny($head, self::TINYSOURCE_HEAD);
+				$body = $this->makeTiny($body, self::TINYSOURCE_BODY);
+
+				$GLOBALS['TSFE']->content = $this->customReplacements($beforeHead . $head . $afterHead . $body . $afterBody);
+			}
 		}
 	}
 
