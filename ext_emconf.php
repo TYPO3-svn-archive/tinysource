@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "tinysource".
  *
- * Auto generated 22-04-2013 12:06
+ * Auto generated 09-04-2014 11:46
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Compresses the output source code of every page by removing line breaks, tabs, comments and double spaces. Highly configurable. Works with static file cache extensions.',
 	'category' => 'fe',
 	'shy' => 0,
-	'version' => '2.1.2',
+	'version' => '3.0.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -39,7 +39,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:6:{s:23:"class.tx_tinysource.php";s:4:"6ac4";s:12:"ext_icon.gif";s:4:"43ce";s:17:"ext_localconf.php";s:4:"929e";s:14:"ext_tables.php";s:4:"3884";s:14:"doc/manual.sxw";s:4:"befa";s:16:"static/setup.txt";s:4:"e3ba";}',
+	'_md5_values_when_last_written' => 'a:6:{s:23:"class.tx_tinysource.php";s:4:"4fc9";s:12:"ext_icon.gif";s:4:"43ce";s:17:"ext_localconf.php";s:4:"929e";s:14:"ext_tables.php";s:4:"3884";s:14:"doc/manual.sxw";s:4:"befa";s:16:"static/setup.txt";s:4:"e3ba";}',
 	'suggests' => array(
 	),
 );
